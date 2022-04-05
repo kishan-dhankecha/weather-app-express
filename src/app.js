@@ -41,20 +41,18 @@ app.get('/weather', (req, res) => {
         return res.send({ 'error': "City name must be provided." });
     }
     const query = decodeURIComponent(req.query.city)
-    geocode(query, (error, { name, timezone, latitude, longitude } = {}) => {
+    geocode(query, (error, { name, tz = timezone, lat = latitude, long = longitude } = {}) => {
         if (error) return res.send({ query, error })
-        forecast(latitude, longitude, (error, { temperature, windspeed } = {}) => {
+        forecast(lat, long, (error, { tmp = temperature, ws = windspeed } = {}) => {
             if (error) return res.send({ query, error })
-            res.send({ query, 'result': { name, timezone, temperature, windspeed } });
+            res.send({ query, 'result': { name, tz, tmp, ws } });
         })
     })
 
 })
 
 app.get('*', (req, res) => {
-    res.render('404', {
-        title: 'Not Found'
-    })
+    res.render('404', { title: 'Not Found' })
 })
 
 app.listen(3000, () => {
