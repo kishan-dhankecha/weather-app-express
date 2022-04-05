@@ -42,9 +42,9 @@ app.get('/weather', (req, res) => {
         return res.send({ 'error': "City name must be provided." });
     }
     const query = decodeURIComponent(req.query.city)
-    geocode(query, (error, { name, lat = latitude, long = longitude } = {}) => {
+    geocode(query, (error, { name, latitude: lat, longitude: long } = {}) => {
         if (error) return res.send({ query, error })
-        forecast(lat, long, (error, { tmp = temperature, ws = windspeed } = {}) => {
+        forecast(lat, long, (error, { temperature: tmp, windspeed: ws } = {}) => {
             if (error) return res.send({ query, error })
             res.send({ query, 'result': { name, tmp, ws } });
         })

@@ -12,8 +12,8 @@ weatherForm.addEventListener('submit', (event) => {
             if (data.error) {
                 forecastElement.textContent = data.error
             } else {
-                const { name, temperature, windspeed } = data.result
-                const forecast = `The weather in "${name}" is ${temperature}°C with the windspeed ${windspeed}km/h.`;
+                const { name, tmp, ws } = data.result
+                const forecast = `The weather in "${name}" is ${tmp}°C with the windspeed ${ws}km/h.`;
                 forecastElement.textContent = forecast
             }
         })
